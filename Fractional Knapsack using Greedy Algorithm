@@ -1,0 +1,69 @@
+import java.util.Scanner;
+class Knapsack
+{
+    int profit;
+    int weight;
+    float ratio;
+}
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+
+        Knapsack[] k=new Knapsack[3];
+
+        for(int i=0;i<3;i++)
+        {
+            k[i]=new Knapsack();
+        }
+
+        int capacity=50;
+
+        System.out.println("Enter the profit:");
+        for(int i=0;i<3;i++)
+        {
+            k[i].profit=sc.nextInt();
+        }
+
+        System.out.println("Enter the weight:");
+        for(int i=0;i<3;i++)
+        {
+            k[i].weight=sc.nextInt();
+        }
+        for(int i=0;i<3;i++)
+        {
+            k[i].ratio=(float)k[i].profit/k[i].weight;
+        }
+        for(int i=0;i<3-1;i++)
+        {
+            for(int j=i+1;j<3;j++)
+            {
+                if(k[i].ratio<k[j].ratio)
+                {
+                    Knapsack temp = k[i];
+                    k[i]=k[j];
+                    k[j]=temp;
+                }
+            }
+        }
+
+        float total_profit=0;
+
+        for(int i=0;i<3;i++)
+        {
+            if(capacity>=k[i].weight)
+            {
+                total_profit+=k[i].profit;
+                capacity -=k[i].weight;
+            }
+            else
+            {
+                total_profit+=k[i].profit*((float)capacity/k[i].weight);
+                break;
+            }
+        }
+
+        System.out.println("Maximum profit: "+total_profit);
+    }
+}
